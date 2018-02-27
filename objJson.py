@@ -49,20 +49,19 @@ class MyEncoder(json.JSONEncoder):
 
 def myVNetDecoder(jStr):
   jdict = json.loads(jStr)
-  #print dict
+  print dict
   sws = {}
   for sw in jdict["switches"]:
     sws[sw["id"]]=Switch(sw["id"], sw["dpid"], sw["whx"])
-  #print sws
+  print sws
   ls = {}
   for l in jdict["links"]:
     ls[l["id"]]=Link(l["id"], sws[l["switch1"]], sws[l["switch2"]])
-  #print ls
+  print ls
   hs = {}
   for h in jdict["hosts"]:
-    hs[h["id"]]=Host(h["id"], sws[h["switch"]])
-  #print hs
-  return VNet(jdict["name"], sws.values(), ls.values(), hs.values())
+    hs[h["id"]]=Host(h["id"], h["switch"])
+  print hs
 
 
 
@@ -77,11 +76,11 @@ h11 = Host("h11", s1)
 vnet = VNet("vnet1", [s1, s2], [l1], [h1, h11, h2])
 
 jStr = json.dumps(vnet.__dict__, cls=MyEncoder)
-print "Original Obj dump ",jStr
+print jStr
 
 jvnet= myVNetDecoder(jStr)
 
-jStr2 = json.dumps(jvnet.__dict__, cls=MyEncoder)
-print "Decoded Obj dump ",jStr2
+jStr2 = json.dumps(vnet.__dict__, cls=MyEncoder)
+print jStr2
 
 
