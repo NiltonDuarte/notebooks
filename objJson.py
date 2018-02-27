@@ -76,12 +76,12 @@ h2 = Host("h2", s2)
 h11 = Host("h11", s1)
 vnet = VNet("vnet1", [s1, s2], [l1], [h1, h11, h2])
 
-jStr = json.dumps(vnet.__dict__, cls=MyEncoder)
+jStr = json.dumps(vnet.__dict__, cls=MyEncoder, indent=4)
 print "Original Obj dump ",jStr
-
+print "--------------------------------------------------------------"
 jvnet= myVNetDecoder(jStr)
 
-jStr2 = json.dumps(jvnet.__dict__, cls=MyEncoder)
+jStr2 = json.dumps(jvnet.__dict__, cls=MyEncoder, indent=4)
 print "Decoded Obj dump ",jStr2
 
 
